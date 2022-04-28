@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity ClassRoom.
+    -->
+    <changeSet id="20220318165632-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="schedule_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room__schedule_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="schedule"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room__course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+    </changeSet>
+</databaseChangeLog>

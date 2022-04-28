@@ -7,6 +7,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { isPresent } from 'app/core/util/operators';
 import { Pagination } from 'app/core/request/request.model';
 import { IUser, getUserIdentifier } from './user.model';
+import { Course, ICourse } from '../course/course.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -17,6 +18,14 @@ export class UserService {
   query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
     const options = createRequestOption(req);
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  findEtudiant(id: number): Observable<HttpResponse<IUser>> {
+    return this.http.get<IUser>(`api/admin/users/id/${id}`, { observe: 'response' });
+  }
+
+  findCurrentUserCourse(): Observable<HttpResponse<ICourse[]>> {
+    return this.http.get<ICourse[]>(`api/admin/course/user`, { observe: 'response' });
   }
 
   addUserToCollectionIfMissing(userCollection: IUser[], ...usersToCheck: (IUser | null | undefined)[]): IUser[] {

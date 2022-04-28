@@ -1,0 +1,44 @@
+<div class="container-fluid" style="margin-bottom: 15px">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Rechercher un Etudiant</a>
+
+    <div>
+      <form class="form-inline" (ngSubmit)="rechercher()">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [formControl]="search" />
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Numero Etudiant</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Lieu de Naissance</th>
+        <th>Date de Naissance</th>
+        <th>Sexe</th>
+        <th>En regle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="user">
+        <!--<td>{{etudiant?.numIdentifiant}}</td>
+      <td>{{etudiant?.user?.firstName}}</td>
+      <td>{{etudiant?.user?.lastName}}</td>
+      <td>{{etudiant?.lieuNaissance}}</td>
+      <td>{{etudiant?.dateNaissance}}</td>-->
+        <td>{{ user.login }}</td>
+        <td>{{ user.login }}</td>
+        <td>.</td>
+        <td>.</td>
+        <td>.</td>
+        <td>.</td>
+        <td>Oui</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

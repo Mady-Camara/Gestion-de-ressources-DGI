@@ -1,0 +1,42 @@
+{
+  "changelogDate": "20220318161448",
+  "fields": [
+    {
+      "fieldName": "courseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "totalHour",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "beginHourse",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "endHour",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Course",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "module_name",
+      "otherEntityName": "module",
+      "relationshipName": "module",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "id": false,
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "course",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

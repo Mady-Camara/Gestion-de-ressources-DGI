@@ -1,0 +1,105 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.p-footer {
+  font-family: 'Monaco';
+  font-size: 2em;
+  color: #01416b;
+}
+
+.p-footer-esp {
+  font-family: 'Monaco';
+  font-size: 1.75em;
+  color: #2f4f4f;
+}
+
+.size-icon {
+  font-size: 20px;
+}
+
+.a-footer {
+  font-family: 'Monaco';
+  color: #01416b;
+  font-size: 1em;
+}
+
+.padding-div {
+  padding: 25px 25px 25px 25px;
+  height: 260px;
+}
+
+.margin-div {
+  margin-left: 80px;
+}
+
+.logo-rs {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.logos {
+  margin-top: 60px;
+}
+
+@media all and (max-width: 500px) {
+  .p-footer {
+    font-family: 'Monaco';
+    font-size: 1.5em;
+    color: #01416b;
+  }
+
+  .p-footer-esp {
+    font-family: 'Monaco';
+    font-size: 1.25em;
+    color: #2f4f4f;
+  }
+
+  .margin-div {
+    margin-left: 25px;
+  }
+
+  .logo-rs {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .logos {
+    margin-top: 20px;
+  }
+
+  .a-footer {
+    font-size: 0.8em;
+  }
+}
+
+@media all and (max-width: 300px) {
+  .p-footer {
+    font-family: 'Monaco';
+    font-size: 1.25em;
+    color: #01416b;
+  }
+
+  .p-footer-esp {
+    font-family: 'Monaco';
+    font-size: 1em;
+    color: #2f4f4f;
+  }
+
+  .logos {
+    margin-top: 40px;
+  }
+
+  .a-footer {
+    font-size: 0.8em;
+  }
+}
+
+@media all and (min-width: 305px) and (max-width: 410px) {
+  .logos {
+    margin-top: 40px;
+  }
+}

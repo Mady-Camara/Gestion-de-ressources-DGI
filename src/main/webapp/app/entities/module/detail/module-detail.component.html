@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="module">
+      <h2 data-cy="moduleDetailsHeading"><span>Module</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ module.id }}</span>
+        </dd>
+        <dt><span>Module Name</span></dt>
+        <dd>
+          <span>{{ module.moduleName }}</span>
+        </dd>
+        <dt><span>Desccription</span></dt>
+        <dd>
+          <span>{{ module.desccription }}</span>
+        </dd>
+        <dt><span>Hour Number</span></dt>
+        <dd>
+          <span>{{ module.hourNumber }}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span>{{ module.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/module', module.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

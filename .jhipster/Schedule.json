@@ -1,0 +1,18 @@
+{
+  "changelogDate": "20220318155724",
+  "fields": [
+    {
+      "fieldName": "beginDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Schedule",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

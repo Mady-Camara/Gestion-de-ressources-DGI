@@ -193,6 +193,11 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
     }
 
+    @GetMapping("/users/id/{id}")
+    public ResponseEntity<User> getUser(@PathVariable long id) {
+        return ResponseEntity.ok().body(userRepository.findById(id).get());
+    }
+
     /**
      * {@code DELETE /admin/users/:login} : delete the "login" User.
      *

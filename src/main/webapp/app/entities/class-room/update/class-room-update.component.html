@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-class-room-heading" data-cy="ClassRoomCreateUpdateHeading">Create or edit a Class Room</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_classroomName">Classroom Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="classroomName"
+            id="field_classroomName"
+            data-cy="classroomName"
+            formControlName="classroomName"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_schedule">Schedule</label>
+          <select class="form-control" id="field_schedule" data-cy="schedule" name="schedule" formControlName="schedule">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="scheduleOption.id === editForm.get('schedule')!.value?.id ? editForm.get('schedule')!.value : scheduleOption"
+              *ngFor="let scheduleOption of schedulesSharedCollection; trackBy: trackScheduleById"
+            >
+              {{ scheduleOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_course">Course</label>
+          <select class="form-control" id="field_course" data-cy="course" name="course" formControlName="course">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="courseOption.id === editForm.get('course')!.value?.id ? editForm.get('course')!.value : courseOption"
+              *ngFor="let courseOption of coursesSharedCollection; trackBy: trackCourseById"
+            >
+              {{ courseOption.courseName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

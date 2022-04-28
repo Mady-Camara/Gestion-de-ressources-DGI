@@ -1,0 +1,31 @@
+{
+  "changelogDate": "20220318172338",
+  "fields": [
+    {
+      "fieldName": "moduleName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "desccription",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hourNumber",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "Module",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "module",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

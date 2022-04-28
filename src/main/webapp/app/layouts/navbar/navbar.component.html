@@ -1,8 +1,7 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-white">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span class="navbar-title">Ressource_dgi</span>
-    <span class="navbar-version">{{ version }}</span>
+    <span class="navbar-title">Gestion de ressources DGI</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -22,7 +21,7 @@
         <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
-            <span>Home</span>
+            <span>{{ dash }}</span>
           </span>
         </a>
       </li>
@@ -38,10 +37,58 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
             <fa-icon icon="th-list"></fa-icon>
-            <span>Entities</span>
+            <span>Entités</span>
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="schedule"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Schedule</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="course"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Course</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="class-room"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Class Room</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="module"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Module</span>
+            </a>
+          </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
@@ -115,7 +162,7 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
             <fa-icon icon="user"></fa-icon>
-            <span>Account</span>
+            <span>Compte</span>
           </span>
           <span *ngIf="account?.imageUrl">
             <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
@@ -125,7 +172,7 @@
           <li *ngSwitchCase="true">
             <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-              <span>Settings</span>
+              <span>Paramettre</span>
             </a>
           </li>
           <li *ngSwitchCase="true">
@@ -137,25 +184,25 @@
               data-cy="passwordItem"
             >
               <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
-              <span>Password</span>
+              <span>Mot de passe</span>
             </a>
           </li>
           <li *ngSwitchCase="true">
             <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
               <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign out</span>
+              <span>Se deconnecter</span>
             </a>
           </li>
           <li *ngSwitchCase="false">
             <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
               <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign in</span>
+              <span>Se connecter</span>
             </a>
           </li>
           <li *ngSwitchCase="false">
             <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
               <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
-              <span>Register</span>
+              <span>Créer un compte</span>
             </a>
           </li>
         </ul>
@@ -163,3 +210,11 @@
     </ul>
   </div>
 </nav>
+<div class="nav nav-pills">
+  <div class="col" style="background-color: #318ce7; border: 0px solid; font-size: 2.5px; color: #318ce7">helle</div>
+  <div class="col" style="background-color: #ffff00; border: 0px solid; font-size: 2.5px; color: #ffff00">helle</div>
+  <div class="col" style="background-color: #34c924; border: 0px solid; font-size: 2.5px; color: #34c924">hello</div>
+  <div class="col" style="background-color: #660099; border: 0px solid; font-size: 2.5px; color: #660099">helle</div>
+  <div class="col" style="background-color: #d90115; border: 0px solid; font-size: 2.5px; color: #d90115">helle</div>
+  <div class="col" style="background-color: #318ce7; border: 0px solid; font-size: 2.5px; color: #318ce7">helle</div>
+</div>

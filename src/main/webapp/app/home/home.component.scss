@@ -5,8 +5,8 @@ Main page styles
 .hipster {
   display: inline-block;
   width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
+  height: 220px;
+  background: url('../../content/images/esp.jpeg') no-repeat center top;
   background-size: contain;
 }
 
@@ -17,7 +17,72 @@ Main page styles
   only screen and (min-resolution: 192dpi),
   only screen and (min-resolution: 2dppx) {
   .hipster {
-    background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
+    background: url('../../content/images/esp.jpeg') no-repeat center top;
     background-size: contain;
   }
+}
+
+//====================== COURSES ================================
+.details {
+  //max-width: max-content;
+  height: auto;
+  border-radius: 8px;
+  flex-direction: column;
+  margin-bottom: 20px;
+  //border: 1px solid #000000;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+.details__item {
+  display: flex;
+  width: auto;
+  max-height: max-content;
+}
+.item__image {
+  display: flex;
+  justify-content: center;
+}
+.item__details {
+  padding: 15px 15px 5px 5px;
+  font-size: 1rem;
+}
+.item__title {
+  font-size: 18px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.item__price {
+  font-size: 16px;
+  //color: #767779;
+  font-weight: 400;
+}
+.item__description {
+  font-size: 16px;
+  color: #767779;
+  margin-top: 10px;
+  font-weight: 350;
+}
+.span {
+  font-size: 12px;
+}
+.date {
+  font-size: 10px;
+  color: #767779;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.row {
+  padding-top: 15px;
+  padding-left: 25px;
+  padding-right: 15px;
+}
+.detail-button {
+  color: #ffffff;
+  //background: #5e17eb;
+  padding: 0;
+  margin: 0;
+}
+.detail-button:hover {
+  //background: #3366cc;
 }

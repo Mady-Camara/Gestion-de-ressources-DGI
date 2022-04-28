@@ -1,0 +1,27 @@
+{
+  "changelogDate": "20220318165632",
+  "fields": [
+    {
+      "fieldName": "classroomName",
+      "fieldType": "String"
+    }
+  ],
+  "name": "ClassRoom",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "schedule",
+      "relationshipName": "schedule",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "coursename",
+      "otherEntityName": "course",
+      "relationshipName": "course",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

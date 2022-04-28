@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
+  dash = 'Accueil';
 
   constructor(
     private loginService: LoginService,
@@ -41,6 +42,7 @@ export class NavbarComponent implements OnInit {
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
+      this.dash = 'Tableau de bord';
     });
   }
 
@@ -56,6 +58,7 @@ export class NavbarComponent implements OnInit {
     this.collapseNavbar();
     this.loginService.logout();
     this.router.navigate(['']);
+    this.dash = 'Acceuil';
   }
 
   toggleNavbar(): void {

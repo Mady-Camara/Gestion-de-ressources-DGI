@@ -241,3 +241,5 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [definitelytyped]: https://definitelytyped.org/
 [angular cli]: https://cli.angular.io/
 [gatling]: https://gatling.io/
+
+# Gestion-de-ressources-DGI
