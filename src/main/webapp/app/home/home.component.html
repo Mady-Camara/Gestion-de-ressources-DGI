@@ -70,10 +70,6 @@
     -->
 
     <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account">Vous êtes connecte en tant que "{{ account.login }}".</span>
-      </div>
-
       <div class="alert alert-warning" *ngSwitchCase="false">
         <span>Cliquez sur </span>
         <a class="alert-link" (click)="login()">SE CONNECTER</a>
@@ -84,32 +80,6 @@
         <span>You don't have an account yet?</span>&nbsp;
         <a class="alert-link" routerLink="account/register">Register a new account</a>
       </div>-->
-    </div>
-
-    <div *ngIf="account">
-      <div class="details card" *ngFor="let cours of courses">
-        <div class="alert alert-warning" *ngIf="courses?.length === 0">
-          <h1>Vous n'avez aucun cours</h1>
-        </div>
-        <div *ngIf="cours">
-          <div class="details__item">
-            <div class="item__details">
-              <div class="item__title">{{ cours.courseName }}</div>
-              <div>
-                Nombre total d'heure : <span>{{ cours.totalHour }}</span>
-              </div>
-              <div class="item__price">{{ cours.beginHourse }} à {{ cours.endHour }}</div>
-            </div>
-          </div>
-          <span class="item__details"
-            >Vous avez dispenser le cours ?<br />
-            <span class="item__details">
-              Oui : <input type="radio" name="oui" value="true" /> Non : <input type="radio" name="oui" value="false" />
-            </span>
-          </span>
-        </div>
-        <button class="btn btn-primary">detail</button>
-      </div>
     </div>
 
     <!--<section class="ftco-section">
@@ -516,3 +486,32 @@
   <div class="overlay-app"></div>
 </div>
 -->
+<div *ngIf="account" style="display: block; margin-left: auto; margin-right: auto; width: 70%; text-align: center">
+  <h2>Mes cours :</h2>
+  <div class="alert alert-danger" *ngIf="courses?.length === 0">
+    <h3>Vous n'avez aucun cours pour l'instant</h3>
+  </div>
+  <div class="details card" *ngFor="let cours of courses">
+    <div *ngIf="cours">
+      <div class="details__item">
+        <div class="item__details">
+          <div class="item__title">{{ cours.courseName }}</div>
+          <div>
+            Nombre total d'heure : <span>{{ cours.volumeHoraire }}</span>
+          </div>
+          <div>
+            Jour : <span>{{ cours.jour }}</span>
+          </div>
+          <div class="item__price">{{ cours?.heureDeDebut?.toString() }} à {{ cours.heureDeFin?.toString() }}</div>
+        </div>
+      </div>
+      <span class="item__details"
+        >Vous avez dispenser le cours ?<br />
+        <!--<span class="item__details">
+          Oui : <input type="radio" name="oui" value="true" /> Non : <input type="radio" name="oui" value="false" />
+        </span>-->
+      </span>
+    </div>
+    <button class="btn btn-primary">Pointer</button>
+  </div>
+</div>

@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
-      this.dash = 'Tableau de bord';
+      this.dash = 'Cours';
     });
   }
 
@@ -52,6 +52,11 @@ export class NavbarComponent implements OnInit {
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  etat(): void {
+    this.isNavbarCollapsed = true;
+    this.router.navigate(['/dashboard']);
   }
 
   logout(): void {

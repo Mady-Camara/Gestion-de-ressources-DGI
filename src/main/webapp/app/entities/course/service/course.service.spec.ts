@@ -26,9 +26,12 @@ describe('Course Service', () => {
     elemDefault = {
       id: 0,
       courseName: 'AAAAAAA',
-      totalHour: currentDate,
-      beginHourse: currentDate,
-      endHour: currentDate,
+      pointer: false,
+      jour: currentDate,
+      volumeHoraire: 0,
+      salle: 'AAAAAAA',
+      heureDeDebut: 'AAAAAAA',
+      heureDeFin: 'AAAAAAA',
     };
   });
 
@@ -36,9 +39,7 @@ describe('Course Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
-          totalHour: currentDate.format(DATE_FORMAT),
-          beginHourse: currentDate.format(DATE_FORMAT),
-          endHour: currentDate.format(DATE_FORMAT),
+          jour: currentDate.format(DATE_FORMAT),
         },
         elemDefault
       );
@@ -54,18 +55,14 @@ describe('Course Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
-          totalHour: currentDate.format(DATE_FORMAT),
-          beginHourse: currentDate.format(DATE_FORMAT),
-          endHour: currentDate.format(DATE_FORMAT),
+          jour: currentDate.format(DATE_FORMAT),
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          totalHour: currentDate,
-          beginHourse: currentDate,
-          endHour: currentDate,
+          jour: currentDate,
         },
         returnedFromService
       );
@@ -82,18 +79,19 @@ describe('Course Service', () => {
         {
           id: 1,
           courseName: 'BBBBBB',
-          totalHour: currentDate.format(DATE_FORMAT),
-          beginHourse: currentDate.format(DATE_FORMAT),
-          endHour: currentDate.format(DATE_FORMAT),
+          pointer: true,
+          jour: currentDate.format(DATE_FORMAT),
+          volumeHoraire: 1,
+          salle: 'BBBBBB',
+          heureDeDebut: 'BBBBBB',
+          heureDeFin: 'BBBBBB',
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          totalHour: currentDate,
-          beginHourse: currentDate,
-          endHour: currentDate,
+          jour: currentDate,
         },
         returnedFromService
       );
@@ -109,7 +107,8 @@ describe('Course Service', () => {
       const patchObject = Object.assign(
         {
           courseName: 'BBBBBB',
-          beginHourse: currentDate.format(DATE_FORMAT),
+          jour: currentDate.format(DATE_FORMAT),
+          salle: 'BBBBBB',
         },
         new Course()
       );
@@ -118,9 +117,7 @@ describe('Course Service', () => {
 
       const expected = Object.assign(
         {
-          totalHour: currentDate,
-          beginHourse: currentDate,
-          endHour: currentDate,
+          jour: currentDate,
         },
         returnedFromService
       );
@@ -137,18 +134,19 @@ describe('Course Service', () => {
         {
           id: 1,
           courseName: 'BBBBBB',
-          totalHour: currentDate.format(DATE_FORMAT),
-          beginHourse: currentDate.format(DATE_FORMAT),
-          endHour: currentDate.format(DATE_FORMAT),
+          pointer: true,
+          jour: currentDate.format(DATE_FORMAT),
+          volumeHoraire: 1,
+          salle: 'BBBBBB',
+          heureDeDebut: 'BBBBBB',
+          heureDeFin: 'BBBBBB',
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          totalHour: currentDate,
-          beginHourse: currentDate,
-          endHour: currentDate,
+          jour: currentDate,
         },
         returnedFromService
       );
@@ -198,7 +196,7 @@ describe('Course Service', () => {
       });
 
       it('should add only unique Course to an array', () => {
-        const courseArray: ICourse[] = [{ id: 123 }, { id: 456 }, { id: 97542 }];
+        const courseArray: ICourse[] = [{ id: 123 }, { id: 456 }, { id: 53908 }];
         const courseCollection: ICourse[] = [{ id: 123 }];
         expectedResult = service.addCourseToCollectionIfMissing(courseCollection, ...courseArray);
         expect(expectedResult).toHaveLength(3);

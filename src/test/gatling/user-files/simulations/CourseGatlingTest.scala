@@ -72,9 +72,12 @@ class CourseGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "courseName":"SAMPLE_TEXT"
-                , "totalHour":"2020-01-01T00:00:00.000Z"
-                , "beginHourse":"2020-01-01T00:00:00.000Z"
-                , "endHour":"2020-01-01T00:00:00.000Z"
+                , "pointer":null
+                , "jour":"2020-01-01T00:00:00.000Z"
+                , "volumeHoraire":"0"
+                , "salle":"SAMPLE_TEXT"
+                , "heureDeDebut":"SAMPLE_TEXT"
+                , "heureDeFin":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_course_url"))).exitHereIfFailed

@@ -8,10 +8,6 @@
     {
       "fieldName": "desccription",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "hourNumber",
-      "fieldType": "Integer"
     }
   ],
   "name": "Module",

@@ -18,17 +18,29 @@
         <dd>
           <span>{{ course.courseName }}</span>
         </dd>
-        <dt><span>Total Hour</span></dt>
+        <dt><span>Pointer</span></dt>
         <dd>
-          <span>{{ course.totalHour | formatMediumDate }}</span>
+          <span>{{ course.pointer }}</span>
         </dd>
-        <dt><span>Begin Hourse</span></dt>
+        <dt><span>Jour</span></dt>
         <dd>
-          <span>{{ course.beginHourse | formatMediumDate }}</span>
+          <span>{{ course.jour | formatMediumDate }}</span>
         </dd>
-        <dt><span>End Hour</span></dt>
+        <dt><span>Volume Horaire</span></dt>
         <dd>
-          <span>{{ course.endHour | formatMediumDate }}</span>
+          <span>{{ course.volumeHoraire }}</span>
+        </dd>
+        <dt><span>Salle</span></dt>
+        <dd>
+          <span>{{ course.salle }}</span>
+        </dd>
+        <dt><span>Heure De Debut</span></dt>
+        <dd>
+          <span>{{ course.heureDeDebut }}</span>
+        </dd>
+        <dt><span>Heure De Fin</span></dt>
+        <dd>
+          <span>{{ course.heureDeFin }}</span>
         </dd>
         <dt><span>Module</span></dt>
         <dd>
@@ -39,6 +51,12 @@
         <dt><span>User</span></dt>
         <dd>
           <span>{{ course.user?.login }}</span>
+        </dd>
+        <dt><span>Classe</span></dt>
+        <dd>
+          <div *ngIf="course.classe">
+            <a [routerLink]="['/class-room', course.classe?.id, 'view']">{{ course.classe?.classroomName }}</a>
+          </div>
         </dd>
       </dl>
 

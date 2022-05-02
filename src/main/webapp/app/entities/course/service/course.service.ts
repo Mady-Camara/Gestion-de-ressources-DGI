@@ -9,7 +9,6 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICourse, getCourseIdentifier } from '../course.model';
-import { IUser } from '../../user/user.model';
 
 export type EntityResponseType = HttpResponse<ICourse>;
 export type EntityArrayResponseType = HttpResponse<ICourse[]>;
@@ -79,19 +78,23 @@ export class CourseService {
     return this.http.get<ICourse[]>(`${this.resourceUrl}/user`, { observe: 'response' });
   }
 
+  findUserCoursesPointerTrue(): Observable<HttpResponse<ICourse[]>> {
+    return this.http.get<ICourse[]>(`${this.resourceUrl}/pointer`, { observe: 'response' });
+  }
+
+  findUserCoursesPointerFalse(): Observable<HttpResponse<ICourse[]>> {
+    return this.http.get<ICourse[]>(`${this.resourceUrl}/notpointer`, { observe: 'response' });
+  }
+
   protected convertDateFromClient(course: ICourse): ICourse {
     return Object.assign({}, course, {
-      totalHour: course.totalHour?.isValid() ? course.totalHour.format(DATE_FORMAT) : undefined,
-      beginHourse: course.beginHourse?.isValid() ? course.beginHourse.format(DATE_FORMAT) : undefined,
-      endHour: course.endHour?.isValid() ? course.endHour.format(DATE_FORMAT) : undefined,
+      jour: course.jour?.isValid() ? course.jour.format(DATE_FORMAT) : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.totalHour = res.body.totalHour ? dayjs(res.body.totalHour) : undefined;
-      res.body.beginHourse = res.body.beginHourse ? dayjs(res.body.beginHourse) : undefined;
-      res.body.endHour = res.body.endHour ? dayjs(res.body.endHour) : undefined;
+      res.body.jour = res.body.jour ? dayjs(res.body.jour) : undefined;
     }
     return res;
   }
@@ -99,9 +102,7 @@ export class CourseService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((course: ICourse) => {
-        course.totalHour = course.totalHour ? dayjs(course.totalHour) : undefined;
-        course.beginHourse = course.beginHourse ? dayjs(course.beginHourse) : undefined;
-        course.endHour = course.endHour ? dayjs(course.endHour) : undefined;
+        course.jour = course.jour ? dayjs(course.jour) : undefined;
       });
     }
     return res;

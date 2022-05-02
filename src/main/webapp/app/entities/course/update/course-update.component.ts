@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { IModule } from 'app/entities/module/module.model';
 import { ModuleService } from 'app/entities/module/service/module.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { IClassRoom } from 'app/entities/class-room/class-room.model';
+import { ClassRoomService } from 'app/entities/class-room/service/class-room.service';
 
 @Component({
   selector: 'jhi-course-update',
@@ -21,21 +23,27 @@ export class CourseUpdateComponent implements OnInit {
 
   modulesSharedCollection: IModule[] = [];
   usersSharedCollection: IUser[] = [];
+  classRoomsSharedCollection: IClassRoom[] = [];
 
   editForm = this.fb.group({
     id: [],
     courseName: [],
-    totalHour: [],
-    beginHourse: [],
-    endHour: [],
+    pointer: [],
+    jour: [],
+    volumeHoraire: [],
+    salle: [],
+    heureDeDebut: [null, [Validators.required]],
+    heureDeFin: [null, [Validators.required]],
     module: [],
     user: [],
+    classe: [],
   });
 
   constructor(
     protected courseService: CourseService,
     protected moduleService: ModuleService,
     protected userService: UserService,
+    protected classRoomService: ClassRoomService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -54,6 +62,8 @@ export class CourseUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+    this.createFromForm().heureDeDebut = this.createFromForm().heureDeDebut?.toString();
+    this.createFromForm().heureDeFin = this.createFromForm().heureDeFin?.toString();
     const course = this.createFromForm();
     if (course.id !== undefined) {
       this.subscribeToSaveResponse(this.courseService.update(course));
@@ -67,6 +77,10 @@ export class CourseUpdateComponent implements OnInit {
   }
 
   trackUserById(index: number, item: IUser): number {
+    return item.id!;
+  }
+
+  trackClassRoomById(index: number, item: IClassRoom): number {
     return item.id!;
   }
 
@@ -93,15 +107,23 @@ export class CourseUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: course.id,
       courseName: course.courseName,
-      totalHour: course.totalHour,
-      beginHourse: course.beginHourse,
-      endHour: course.endHour,
+      pointer: course.pointer,
+      jour: course.jour,
+      volumeHoraire: course.volumeHoraire,
+      salle: course.salle,
+      heureDeDebut: course.heureDeDebut,
+      heureDeFin: course.heureDeFin,
       module: course.module,
       user: course.user,
+      classe: course.classe,
     });
 
     this.modulesSharedCollection = this.moduleService.addModuleToCollectionIfMissing(this.modulesSharedCollection, course.module);
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, course.user);
+    this.classRoomsSharedCollection = this.classRoomService.addClassRoomToCollectionIfMissing(
+      this.classRoomsSharedCollection,
+      course.classe
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -116,6 +138,16 @@ export class CourseUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing(users, this.editForm.get('user')!.value)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.classRoomService
+      .query()
+      .pipe(map((res: HttpResponse<IClassRoom[]>) => res.body ?? []))
+      .pipe(
+        map((classRooms: IClassRoom[]) =>
+          this.classRoomService.addClassRoomToCollectionIfMissing(classRooms, this.editForm.get('classe')!.value)
+        )
+      )
+      .subscribe((classRooms: IClassRoom[]) => (this.classRoomsSharedCollection = classRooms));
   }
 
   protected createFromForm(): ICourse {
@@ -123,11 +155,15 @@ export class CourseUpdateComponent implements OnInit {
       ...new Course(),
       id: this.editForm.get(['id'])!.value,
       courseName: this.editForm.get(['courseName'])!.value,
-      totalHour: this.editForm.get(['totalHour'])!.value,
-      beginHourse: this.editForm.get(['beginHourse'])!.value,
-      endHour: this.editForm.get(['endHour'])!.value,
+      pointer: this.editForm.get(['pointer'])!.value,
+      jour: this.editForm.get(['jour'])!.value,
+      volumeHoraire: this.editForm.get(['volumeHoraire'])!.value,
+      salle: this.editForm.get(['salle'])!.value,
+      heureDeDebut: this.editForm.get(['heureDeDebut'])!.value,
+      heureDeFin: this.editForm.get(['heureDeFin'])!.value,
       module: this.editForm.get(['module'])!.value,
       user: this.editForm.get(['user'])!.value,
+      classe: this.editForm.get(['classe'])!.value,
     };
   }
 }

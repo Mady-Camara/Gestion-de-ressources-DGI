@@ -27,6 +27,43 @@
       </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="dashboard" data-cy="dashboard">
+          <span *ngIf="account">
+            <fa-icon icon="user"></fa-icon>
+            <span>
+              <span>dashboard</span>
+            </span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dashboard">
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="dashboard" routerLinkActive="active" (click)="collapseNavbar()" data-cy="passwordItem">
+              <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+              <span>Etudiant</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+              <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+              <span>Absence</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="false">
+            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
+              <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+              <span>Créer un compte</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li
         *ngSwitchCase="true"
         ngbDropdown
         class="nav-item dropdown pointer"
@@ -162,7 +199,10 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
             <fa-icon icon="user"></fa-icon>
-            <span>Compte</span>
+            <span>
+              <span *ngIf="!account">compte</span>
+              {{ account?.login }}
+            </span>
           </span>
           <span *ngIf="account?.imageUrl">
             <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />

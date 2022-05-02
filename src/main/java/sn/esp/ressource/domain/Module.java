@@ -27,9 +27,6 @@ public class Module implements Serializable {
     @Column(name = "desccription")
     private String desccription;
 
-    @Column(name = "hour_number")
-    private Integer hourNumber;
-
     @ManyToOne
     private User user;
 
@@ -74,19 +71,6 @@ public class Module implements Serializable {
         this.desccription = desccription;
     }
 
-    public Integer getHourNumber() {
-        return this.hourNumber;
-    }
-
-    public Module hourNumber(Integer hourNumber) {
-        this.setHourNumber(hourNumber);
-        return this;
-    }
-
-    public void setHourNumber(Integer hourNumber) {
-        this.hourNumber = hourNumber;
-    }
-
     public User getUser() {
         return this.user;
     }
@@ -126,7 +110,6 @@ public class Module implements Serializable {
             "id=" + getId() +
             ", moduleName='" + getModuleName() + "'" +
             ", desccription='" + getDesccription() + "'" +
-            ", hourNumber=" + getHourNumber() +
             "}";
     }
 }

@@ -127,9 +127,6 @@ public class ModuleResource {
                 if (module.getDesccription() != null) {
                     existingModule.setDesccription(module.getDesccription());
                 }
-                if (module.getHourNumber() != null) {
-                    existingModule.setHourNumber(module.getHourNumber());
-                }
 
                 return existingModule;
             })
@@ -179,10 +176,5 @@ public class ModuleResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
-    }
-
-    @GetMapping("/modules/user")
-    public List<Module> getCurrentUserModule() {
-        return moduleRepository.findByUserIsCurrentUser();
     }
 }

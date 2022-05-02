@@ -6,16 +6,30 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "totalHour",
+      "fieldName": "pointer",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "jour",
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "beginHourse",
-      "fieldType": "LocalDate"
+      "fieldName": "volumeHoraire",
+      "fieldType": "Integer"
     },
     {
-      "fieldName": "endHour",
-      "fieldType": "LocalDate"
+      "fieldName": "salle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "heureDeDebut",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "heureDeFin",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "name": "Course",
@@ -36,6 +50,12 @@
       "ownerSide": true,
       "relationshipName": "user",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "classroomName",
+      "otherEntityName": "classRoom",
+      "relationshipName": "classe",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "no"

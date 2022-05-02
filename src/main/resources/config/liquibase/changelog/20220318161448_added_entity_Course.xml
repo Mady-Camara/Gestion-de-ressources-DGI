@@ -17,20 +17,32 @@
             <column name="course_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="total_hour" type="date">
+            <column name="pointer" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="begin_hourse" type="date">
+            <column name="jour" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="end_hour" type="date">
+            <column name="volume_horaire" type="integer">
                 <constraints nullable="true" />
+            </column>
+            <column name="salle" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="heure_de_debut" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="heure_de_fin" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
             <column name="module_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_course__user_id" />
+            </column>
+            <column name="classe_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -54,9 +66,12 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="course_name" type="string"/>
-            <column name="total_hour" type="date"/>
-            <column name="begin_hourse" type="date"/>
-            <column name="end_hour" type="date"/>
+            <column name="pointer" type="boolean"/>
+            <column name="jour" type="date"/>
+            <column name="volume_horaire" type="numeric"/>
+            <column name="salle" type="string"/>
+            <column name="heure_de_debut" type="string"/>
+            <column name="heure_de_fin" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

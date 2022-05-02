@@ -19,5 +19,11 @@
                                  constraintName="fk_course__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="course"
+                                 constraintName="fk_course__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="class_room"/>
     </changeSet>
 </databaseChangeLog>
