@@ -73,7 +73,6 @@ class ModuleGatlingTest extends Simulation {
             .body(StringBody("""{
                 "moduleName":"SAMPLE_TEXT"
                 , "desccription":"SAMPLE_TEXT"
-                , "hourNumber":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_module_url"))).exitHereIfFailed

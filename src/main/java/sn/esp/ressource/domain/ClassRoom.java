@@ -29,7 +29,7 @@ public class ClassRoom implements Serializable {
     private Schedule schedule;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "module" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "module", "user", "classe" }, allowSetters = true)
     private Course course;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -34,14 +34,23 @@ class CourseResourceIT {
     private static final String DEFAULT_COURSE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_COURSE_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_TOTAL_HOUR = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TOTAL_HOUR = LocalDate.now(ZoneId.systemDefault());
+    private static final Boolean DEFAULT_POINTER = false;
+    private static final Boolean UPDATED_POINTER = true;
 
-    private static final LocalDate DEFAULT_BEGIN_HOURSE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_BEGIN_HOURSE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate DEFAULT_JOUR = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_JOUR = LocalDate.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_END_HOUR = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_END_HOUR = LocalDate.now(ZoneId.systemDefault());
+    private static final Integer DEFAULT_VOLUME_HORAIRE = 1;
+    private static final Integer UPDATED_VOLUME_HORAIRE = 2;
+
+    private static final String DEFAULT_SALLE = "AAAAAAAAAA";
+    private static final String UPDATED_SALLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_HEURE_DE_DEBUT = "AAAAAAAAAA";
+    private static final String UPDATED_HEURE_DE_DEBUT = "BBBBBBBBBB";
+
+    private static final String DEFAULT_HEURE_DE_FIN = "AAAAAAAAAA";
+    private static final String UPDATED_HEURE_DE_FIN = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/courses";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -69,9 +78,12 @@ class CourseResourceIT {
     public static Course createEntity(EntityManager em) {
         Course course = new Course()
             .courseName(DEFAULT_COURSE_NAME)
-            .totalHour(DEFAULT_TOTAL_HOUR)
-            .beginHourse(DEFAULT_BEGIN_HOURSE)
-            .endHour(DEFAULT_END_HOUR);
+            .pointer(DEFAULT_POINTER)
+            .jour(DEFAULT_JOUR)
+            .volumeHoraire(DEFAULT_VOLUME_HORAIRE)
+            .salle(DEFAULT_SALLE)
+            .heureDeDebut(DEFAULT_HEURE_DE_DEBUT)
+            .heureDeFin(DEFAULT_HEURE_DE_FIN);
         return course;
     }
 
@@ -84,9 +96,12 @@ class CourseResourceIT {
     public static Course createUpdatedEntity(EntityManager em) {
         Course course = new Course()
             .courseName(UPDATED_COURSE_NAME)
-            .totalHour(UPDATED_TOTAL_HOUR)
-            .beginHourse(UPDATED_BEGIN_HOURSE)
-            .endHour(UPDATED_END_HOUR);
+            .pointer(UPDATED_POINTER)
+            .jour(UPDATED_JOUR)
+            .volumeHoraire(UPDATED_VOLUME_HORAIRE)
+            .salle(UPDATED_SALLE)
+            .heureDeDebut(UPDATED_HEURE_DE_DEBUT)
+            .heureDeFin(UPDATED_HEURE_DE_FIN);
         return course;
     }
 
@@ -109,9 +124,12 @@ class CourseResourceIT {
         assertThat(courseList).hasSize(databaseSizeBeforeCreate + 1);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getCourseName()).isEqualTo(DEFAULT_COURSE_NAME);
-        assertThat(testCourse.getTotalHour()).isEqualTo(DEFAULT_TOTAL_HOUR);
-        assertThat(testCourse.getBeginHourse()).isEqualTo(DEFAULT_BEGIN_HOURSE);
-        assertThat(testCourse.getEndHour()).isEqualTo(DEFAULT_END_HOUR);
+        assertThat(testCourse.getPointer()).isEqualTo(DEFAULT_POINTER);
+        assertThat(testCourse.getJour()).isEqualTo(DEFAULT_JOUR);
+        assertThat(testCourse.getVolumeHoraire()).isEqualTo(DEFAULT_VOLUME_HORAIRE);
+        assertThat(testCourse.getSalle()).isEqualTo(DEFAULT_SALLE);
+        assertThat(testCourse.getHeureDeDebut()).isEqualTo(DEFAULT_HEURE_DE_DEBUT);
+        assertThat(testCourse.getHeureDeFin()).isEqualTo(DEFAULT_HEURE_DE_FIN);
     }
 
     @Test
@@ -134,6 +152,40 @@ class CourseResourceIT {
 
     @Test
     @Transactional
+    void checkHeureDeDebutIsRequired() throws Exception {
+        int databaseSizeBeforeTest = courseRepository.findAll().size();
+        // set the field null
+        course.setHeureDeDebut(null);
+
+        // Create the Course, which fails.
+
+        restCourseMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(course)))
+            .andExpect(status().isBadRequest());
+
+        List<Course> courseList = courseRepository.findAll();
+        assertThat(courseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkHeureDeFinIsRequired() throws Exception {
+        int databaseSizeBeforeTest = courseRepository.findAll().size();
+        // set the field null
+        course.setHeureDeFin(null);
+
+        // Create the Course, which fails.
+
+        restCourseMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(course)))
+            .andExpect(status().isBadRequest());
+
+        List<Course> courseList = courseRepository.findAll();
+        assertThat(courseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCourses() throws Exception {
         // Initialize the database
         courseRepository.saveAndFlush(course);
@@ -145,9 +197,12 @@ class CourseResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(course.getId().intValue())))
             .andExpect(jsonPath("$.[*].courseName").value(hasItem(DEFAULT_COURSE_NAME)))
-            .andExpect(jsonPath("$.[*].totalHour").value(hasItem(DEFAULT_TOTAL_HOUR.toString())))
-            .andExpect(jsonPath("$.[*].beginHourse").value(hasItem(DEFAULT_BEGIN_HOURSE.toString())))
-            .andExpect(jsonPath("$.[*].endHour").value(hasItem(DEFAULT_END_HOUR.toString())));
+            .andExpect(jsonPath("$.[*].pointer").value(hasItem(DEFAULT_POINTER.booleanValue())))
+            .andExpect(jsonPath("$.[*].jour").value(hasItem(DEFAULT_JOUR.toString())))
+            .andExpect(jsonPath("$.[*].volumeHoraire").value(hasItem(DEFAULT_VOLUME_HORAIRE)))
+            .andExpect(jsonPath("$.[*].salle").value(hasItem(DEFAULT_SALLE)))
+            .andExpect(jsonPath("$.[*].heureDeDebut").value(hasItem(DEFAULT_HEURE_DE_DEBUT)))
+            .andExpect(jsonPath("$.[*].heureDeFin").value(hasItem(DEFAULT_HEURE_DE_FIN)));
     }
 
     @Test
@@ -163,9 +218,12 @@ class CourseResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(course.getId().intValue()))
             .andExpect(jsonPath("$.courseName").value(DEFAULT_COURSE_NAME))
-            .andExpect(jsonPath("$.totalHour").value(DEFAULT_TOTAL_HOUR.toString()))
-            .andExpect(jsonPath("$.beginHourse").value(DEFAULT_BEGIN_HOURSE.toString()))
-            .andExpect(jsonPath("$.endHour").value(DEFAULT_END_HOUR.toString()));
+            .andExpect(jsonPath("$.pointer").value(DEFAULT_POINTER.booleanValue()))
+            .andExpect(jsonPath("$.jour").value(DEFAULT_JOUR.toString()))
+            .andExpect(jsonPath("$.volumeHoraire").value(DEFAULT_VOLUME_HORAIRE))
+            .andExpect(jsonPath("$.salle").value(DEFAULT_SALLE))
+            .andExpect(jsonPath("$.heureDeDebut").value(DEFAULT_HEURE_DE_DEBUT))
+            .andExpect(jsonPath("$.heureDeFin").value(DEFAULT_HEURE_DE_FIN));
     }
 
     @Test
@@ -189,9 +247,12 @@ class CourseResourceIT {
         em.detach(updatedCourse);
         updatedCourse
             .courseName(UPDATED_COURSE_NAME)
-            .totalHour(UPDATED_TOTAL_HOUR)
-            .beginHourse(UPDATED_BEGIN_HOURSE)
-            .endHour(UPDATED_END_HOUR);
+            .pointer(UPDATED_POINTER)
+            .jour(UPDATED_JOUR)
+            .volumeHoraire(UPDATED_VOLUME_HORAIRE)
+            .salle(UPDATED_SALLE)
+            .heureDeDebut(UPDATED_HEURE_DE_DEBUT)
+            .heureDeFin(UPDATED_HEURE_DE_FIN);
 
         restCourseMockMvc
             .perform(
@@ -206,9 +267,12 @@ class CourseResourceIT {
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getCourseName()).isEqualTo(UPDATED_COURSE_NAME);
-        assertThat(testCourse.getTotalHour()).isEqualTo(UPDATED_TOTAL_HOUR);
-        assertThat(testCourse.getBeginHourse()).isEqualTo(UPDATED_BEGIN_HOURSE);
-        assertThat(testCourse.getEndHour()).isEqualTo(UPDATED_END_HOUR);
+        assertThat(testCourse.getPointer()).isEqualTo(UPDATED_POINTER);
+        assertThat(testCourse.getJour()).isEqualTo(UPDATED_JOUR);
+        assertThat(testCourse.getVolumeHoraire()).isEqualTo(UPDATED_VOLUME_HORAIRE);
+        assertThat(testCourse.getSalle()).isEqualTo(UPDATED_SALLE);
+        assertThat(testCourse.getHeureDeDebut()).isEqualTo(UPDATED_HEURE_DE_DEBUT);
+        assertThat(testCourse.getHeureDeFin()).isEqualTo(UPDATED_HEURE_DE_FIN);
     }
 
     @Test
@@ -279,7 +343,7 @@ class CourseResourceIT {
         Course partialUpdatedCourse = new Course();
         partialUpdatedCourse.setId(course.getId());
 
-        partialUpdatedCourse.beginHourse(UPDATED_BEGIN_HOURSE);
+        partialUpdatedCourse.jour(UPDATED_JOUR).salle(UPDATED_SALLE).heureDeDebut(UPDATED_HEURE_DE_DEBUT);
 
         restCourseMockMvc
             .perform(
@@ -294,9 +358,12 @@ class CourseResourceIT {
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getCourseName()).isEqualTo(DEFAULT_COURSE_NAME);
-        assertThat(testCourse.getTotalHour()).isEqualTo(DEFAULT_TOTAL_HOUR);
-        assertThat(testCourse.getBeginHourse()).isEqualTo(UPDATED_BEGIN_HOURSE);
-        assertThat(testCourse.getEndHour()).isEqualTo(DEFAULT_END_HOUR);
+        assertThat(testCourse.getPointer()).isEqualTo(DEFAULT_POINTER);
+        assertThat(testCourse.getJour()).isEqualTo(UPDATED_JOUR);
+        assertThat(testCourse.getVolumeHoraire()).isEqualTo(DEFAULT_VOLUME_HORAIRE);
+        assertThat(testCourse.getSalle()).isEqualTo(UPDATED_SALLE);
+        assertThat(testCourse.getHeureDeDebut()).isEqualTo(UPDATED_HEURE_DE_DEBUT);
+        assertThat(testCourse.getHeureDeFin()).isEqualTo(DEFAULT_HEURE_DE_FIN);
     }
 
     @Test
@@ -313,9 +380,12 @@ class CourseResourceIT {
 
         partialUpdatedCourse
             .courseName(UPDATED_COURSE_NAME)
-            .totalHour(UPDATED_TOTAL_HOUR)
-            .beginHourse(UPDATED_BEGIN_HOURSE)
-            .endHour(UPDATED_END_HOUR);
+            .pointer(UPDATED_POINTER)
+            .jour(UPDATED_JOUR)
+            .volumeHoraire(UPDATED_VOLUME_HORAIRE)
+            .salle(UPDATED_SALLE)
+            .heureDeDebut(UPDATED_HEURE_DE_DEBUT)
+            .heureDeFin(UPDATED_HEURE_DE_FIN);
 
         restCourseMockMvc
             .perform(
@@ -330,9 +400,12 @@ class CourseResourceIT {
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getCourseName()).isEqualTo(UPDATED_COURSE_NAME);
-        assertThat(testCourse.getTotalHour()).isEqualTo(UPDATED_TOTAL_HOUR);
-        assertThat(testCourse.getBeginHourse()).isEqualTo(UPDATED_BEGIN_HOURSE);
-        assertThat(testCourse.getEndHour()).isEqualTo(UPDATED_END_HOUR);
+        assertThat(testCourse.getPointer()).isEqualTo(UPDATED_POINTER);
+        assertThat(testCourse.getJour()).isEqualTo(UPDATED_JOUR);
+        assertThat(testCourse.getVolumeHoraire()).isEqualTo(UPDATED_VOLUME_HORAIRE);
+        assertThat(testCourse.getSalle()).isEqualTo(UPDATED_SALLE);
+        assertThat(testCourse.getHeureDeDebut()).isEqualTo(UPDATED_HEURE_DE_DEBUT);
+        assertThat(testCourse.getHeureDeFin()).isEqualTo(UPDATED_HEURE_DE_FIN);
     }
 
     @Test

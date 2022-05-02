@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-course-heading" data-cy="CourseCreateUpdateHeading">Create or edit a Course</h2>
+      <h2 id="jhi-course-heading" data-cy="CourseCreateUpdateHeading">Creer ou modifier un Cours</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -11,7 +11,8 @@
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="form-group">
+        <!--
+       <div class="form-group">
           <label class="form-control-label" for="field_courseName">Course Name</label>
           <input
             type="text"
@@ -22,65 +23,78 @@
             formControlName="courseName"
           />
         </div>
+        -->
 
         <div class="form-group">
-          <label class="form-control-label" for="field_totalHour">Total Hour</label>
+          <label class="form-control-label" for="field_pointer">Pointer</label>
+          <input type="checkbox" class="form-check" name="pointer" id="field_pointer" data-cy="pointer" formControlName="pointer" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_jour">Jour</label>
           <div class="input-group">
             <input
-              id="field_totalHour"
-              data-cy="totalHour"
+              id="field_jour"
+              data-cy="jour"
               type="text"
               class="form-control"
-              name="totalHour"
+              name="jour"
               ngbDatepicker
-              #totalHourDp="ngbDatepicker"
-              formControlName="totalHour"
+              #jourDp="ngbDatepicker"
+              formControlName="jour"
             />
             <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="totalHourDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
+              <button type="button" class="btn btn-secondary" (click)="jourDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
             </span>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_beginHourse">Begin Hourse</label>
-          <div class="input-group">
-            <input
-              id="field_beginHourse"
-              data-cy="beginHourse"
-              type="text"
-              class="form-control"
-              name="beginHourse"
-              ngbDatepicker
-              #beginHourseDp="ngbDatepicker"
-              formControlName="beginHourse"
-            />
-            <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="beginHourseDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </span>
+          <label class="form-control-label" for="field_volumeHoraire">Volume Horaire</label>
+          <input
+            type="number"
+            class="form-control"
+            name="volumeHoraire"
+            id="field_volumeHoraire"
+            data-cy="volumeHoraire"
+            formControlName="volumeHoraire"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_salle">Salle</label>
+          <input type="text" class="form-control" name="salle" id="field_salle" data-cy="salle" formControlName="salle" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_heureDeDebut">Heure De Debut</label>
+          <input
+            type="time"
+            class="form-control"
+            name="heureDeDebut"
+            id="field_heureDeDebut"
+            data-cy="heureDeDebut"
+            formControlName="heureDeDebut"
+          />
+          <div
+            *ngIf="editForm.get('heureDeDebut')!.invalid && (editForm.get('heureDeDebut')!.dirty || editForm.get('heureDeDebut')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('heureDeDebut')?.errors?.required"> This field is required. </small>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_endHour">End Hour</label>
-          <div class="input-group">
-            <input
-              id="field_endHour"
-              data-cy="endHour"
-              type="text"
-              class="form-control"
-              name="endHour"
-              ngbDatepicker
-              #endHourDp="ngbDatepicker"
-              formControlName="endHour"
-            />
-            <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="endHourDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-            </span>
+          <label class="form-control-label" for="field_heureDeFin">Heure De Fin</label>
+          <input
+            type="time"
+            class="form-control"
+            name="heureDeFin"
+            id="field_heureDeFin"
+            data-cy="heureDeFin"
+            formControlName="heureDeFin"
+          />
+          <div *ngIf="editForm.get('heureDeFin')!.invalid && (editForm.get('heureDeFin')!.dirty || editForm.get('heureDeFin')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('heureDeFin')?.errors?.required"> This field is required. </small>
           </div>
         </div>
 
@@ -97,6 +111,7 @@
           </select>
         </div>
 
+        <!--
         <div class="form-group">
           <label class="form-control-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
@@ -106,6 +121,20 @@
               *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
             >
               {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+        -->
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_classe">Classe</label>
+          <select class="form-control" id="field_classe" data-cy="classe" name="classe" formControlName="classe">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="classRoomOption.id === editForm.get('classe')!.value?.id ? editForm.get('classe')!.value : classRoomOption"
+              *ngFor="let classRoomOption of classRoomsSharedCollection; trackBy: trackClassRoomById"
+            >
+              {{ classRoomOption.classroomName }}
             </option>
           </select>
         </div>

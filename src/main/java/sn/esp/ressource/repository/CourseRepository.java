@@ -13,4 +13,6 @@ import sn.esp.ressource.domain.User;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findCourseByUser(User user);
+    List<Course> findCourseByUserAndPointerIsTrue(User user);
+    List<Course> findCourseByUserAndPointerIsFalse(User user);
 }

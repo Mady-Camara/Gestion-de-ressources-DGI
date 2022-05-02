@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,15 +27,27 @@ public class Course implements Serializable {
     @Column(name = "course_name")
     private String courseName;
 
-    @Column(name = "total_hour")
-    private LocalDate totalHour;
+    @Column(name = "pointer")
+    private Boolean pointer;
 
-    @Column(name = "begin_hourse")
-    private LocalDate beginHourse;
+    @Column(name = "jour")
+    private LocalDate jour;
 
-    @Column(name = "end_hour")
-    private LocalDate endHour;
+    @Column(name = "volume_horaire")
+    private Integer volumeHoraire;
 
+    @Column(name = "salle")
+    private String salle;
+
+    @NotNull
+    @Column(name = "heure_de_debut", nullable = false)
+    private String heureDeDebut;
+
+    @NotNull
+    @Column(name = "heure_de_fin", nullable = false)
+    private String heureDeFin;
+
+    @NotNull
     @ManyToOne
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private Module module;
@@ -42,6 +55,10 @@ public class Course implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "schedule", "course" }, allowSetters = true)
+    private ClassRoom classe;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -71,43 +88,82 @@ public class Course implements Serializable {
         this.courseName = courseName;
     }
 
-    public LocalDate getTotalHour() {
-        return this.totalHour;
+    public Boolean getPointer() {
+        return this.pointer;
     }
 
-    public Course totalHour(LocalDate totalHour) {
-        this.setTotalHour(totalHour);
+    public Course pointer(Boolean pointer) {
+        this.setPointer(pointer);
         return this;
     }
 
-    public void setTotalHour(LocalDate totalHour) {
-        this.totalHour = totalHour;
+    public void setPointer(Boolean pointer) {
+        this.pointer = pointer;
     }
 
-    public LocalDate getBeginHourse() {
-        return this.beginHourse;
+    public LocalDate getJour() {
+        return this.jour;
     }
 
-    public Course beginHourse(LocalDate beginHourse) {
-        this.setBeginHourse(beginHourse);
+    public Course jour(LocalDate jour) {
+        this.setJour(jour);
         return this;
     }
 
-    public void setBeginHourse(LocalDate beginHourse) {
-        this.beginHourse = beginHourse;
+    public void setJour(LocalDate jour) {
+        this.jour = jour;
     }
 
-    public LocalDate getEndHour() {
-        return this.endHour;
+    public Integer getVolumeHoraire() {
+        return this.volumeHoraire;
     }
 
-    public Course endHour(LocalDate endHour) {
-        this.setEndHour(endHour);
+    public Course volumeHoraire(Integer volumeHoraire) {
+        this.setVolumeHoraire(volumeHoraire);
         return this;
     }
 
-    public void setEndHour(LocalDate endHour) {
-        this.endHour = endHour;
+    public void setVolumeHoraire(Integer volumeHoraire) {
+        this.volumeHoraire = volumeHoraire;
+    }
+
+    public String getSalle() {
+        return this.salle;
+    }
+
+    public Course salle(String salle) {
+        this.setSalle(salle);
+        return this;
+    }
+
+    public void setSalle(String salle) {
+        this.salle = salle;
+    }
+
+    public String getHeureDeDebut() {
+        return this.heureDeDebut;
+    }
+
+    public Course heureDeDebut(String heureDeDebut) {
+        this.setHeureDeDebut(heureDeDebut);
+        return this;
+    }
+
+    public void setHeureDeDebut(String heureDeDebut) {
+        this.heureDeDebut = heureDeDebut;
+    }
+
+    public String getHeureDeFin() {
+        return this.heureDeFin;
+    }
+
+    public Course heureDeFin(String heureDeFin) {
+        this.setHeureDeFin(heureDeFin);
+        return this;
+    }
+
+    public void setHeureDeFin(String heureDeFin) {
+        this.heureDeFin = heureDeFin;
     }
 
     public Module getModule() {
@@ -136,6 +192,19 @@ public class Course implements Serializable {
         return this;
     }
 
+    public ClassRoom getClasse() {
+        return this.classe;
+    }
+
+    public void setClasse(ClassRoom classRoom) {
+        this.classe = classRoom;
+    }
+
+    public Course classe(ClassRoom classRoom) {
+        this.setClasse(classRoom);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -161,9 +230,12 @@ public class Course implements Serializable {
         return "Course{" +
             "id=" + getId() +
             ", courseName='" + getCourseName() + "'" +
-            ", totalHour='" + getTotalHour() + "'" +
-            ", beginHourse='" + getBeginHourse() + "'" +
-            ", endHour='" + getEndHour() + "'" +
+            ", pointer='" + getPointer() + "'" +
+            ", jour='" + getJour() + "'" +
+            ", volumeHoraire=" + getVolumeHoraire() +
+            ", salle='" + getSalle() + "'" +
+            ", heureDeDebut='" + getHeureDeDebut() + "'" +
+            ", heureDeFin='" + getHeureDeFin() + "'" +
             "}";
     }
 }

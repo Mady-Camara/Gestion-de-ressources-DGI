@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import sn.esp.ressource.domain.Course;
 import sn.esp.ressource.domain.User;
 import sn.esp.ressource.repository.CourseRepository;
-import sn.esp.ressource.repository.UserRepository;
 import sn.esp.ressource.service.UserService;
 import sn.esp.ressource.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -39,12 +40,9 @@ public class CourseResource {
 
     private final UserService userService;
 
-    private final UserRepository userRepository;
-
-    public CourseResource(CourseRepository courseRepository, UserService userService, UserRepository userRepository) {
+    public CourseResource(CourseRepository courseRepository, UserService userService) {
         this.courseRepository = courseRepository;
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -55,10 +53,22 @@ public class CourseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/courses")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) throws URISyntaxException {
+    public ResponseEntity<Course> createCourse(@Valid @RequestBody Course course) throws URISyntaxException {
         log.debug("REST request to save Course : {}", course);
         if (course.getId() != null) {
-            throw new BadRequestAlertException("A new course cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Un nouveau cours ne peut pas avoir  un id", ENTITY_NAME, "idexists");
+        }
+        if (course.getModule().equals(null)) {
+            throw new BadRequestAlertException("Un cours doit obligatoirement avoir un module", ENTITY_NAME, "modulerequired");
+        } else {
+            course.setCourseName(course.getModule().getModuleName());
+            course.setUser(course.getModule().getUser());
+        }
+        if (course.getPointer() == null) {
+            course.setPointer(false);
+        }
+        if (course.getVolumeHoraire() == null) {
+            course.setVolumeHoraire(0);
         }
         Course result = courseRepository.save(course);
         return ResponseEntity
@@ -78,8 +88,10 @@ public class CourseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/courses/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable(value = "id", required = false) final Long id, @RequestBody Course course)
-        throws URISyntaxException {
+    public ResponseEntity<Course> updateCourse(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Course course
+    ) throws URISyntaxException {
         log.debug("REST request to update Course : {}, {}", id, course);
         if (course.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -90,6 +102,18 @@ public class CourseResource {
 
         if (!courseRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        if (course.getModule().equals(null)) {
+            throw new BadRequestAlertException("Un cours doit obligatoirement avoir un module", ENTITY_NAME, "modulerequired");
+        } else {
+            course.setCourseName(course.getModule().getModuleName());
+            course.setUser(course.getModule().getUser());
+        }
+        if (course.getPointer() == null) {
+            course.setPointer(false);
+        }
+        if (course.getVolumeHoraire() == null) {
+            course.setVolumeHoraire(0);
         }
 
         Course result = courseRepository.save(course);
@@ -113,7 +137,7 @@ public class CourseResource {
     @PatchMapping(value = "/courses/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Course> partialUpdateCourse(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Course course
+        @NotNull @RequestBody Course course
     ) throws URISyntaxException {
         log.debug("REST request to partial update Course partially : {}, {}", id, course);
         if (course.getId() == null) {
@@ -133,14 +157,26 @@ public class CourseResource {
                 if (course.getCourseName() != null) {
                     existingCourse.setCourseName(course.getCourseName());
                 }
-                if (course.getTotalHour() != null) {
-                    existingCourse.setTotalHour(course.getTotalHour());
+                if (course.getPointer() != null) {
+                    existingCourse.setPointer(course.getPointer());
                 }
-                if (course.getBeginHourse() != null) {
-                    existingCourse.setBeginHourse(course.getBeginHourse());
+                if (course.getJour() != null) {
+                    existingCourse.setJour(course.getJour());
                 }
-                if (course.getEndHour() != null) {
-                    existingCourse.setEndHour(course.getEndHour());
+
+                if (course.getVolumeHoraire() != null) {
+                    existingCourse.setVolumeHoraire(course.getVolumeHoraire());
+                } else {
+                    course.setVolumeHoraire(0);
+                }
+                if (course.getSalle() != null) {
+                    existingCourse.setSalle(course.getSalle());
+                }
+                if (course.getHeureDeDebut() != null) {
+                    existingCourse.setHeureDeDebut(course.getHeureDeDebut());
+                }
+                if (course.getHeureDeFin() != null) {
+                    existingCourse.setHeureDeFin(course.getHeureDeFin());
                 }
 
                 return existingCourse;
@@ -159,9 +195,9 @@ public class CourseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of courses in body.
      */
     @GetMapping("/courses")
-    public ResponseEntity<List<Course>> getAllCourses() {
+    public List<Course> getAllCourses() {
         log.debug("REST request to get all Courses");
-        return ResponseEntity.ok().body(courseRepository.findAll());
+        return courseRepository.findAll();
     }
 
     /**
@@ -195,22 +231,19 @@ public class CourseResource {
 
     @GetMapping("/courses/user")
     public ResponseEntity<List<Course>> getUserCourse() {
-        long currentUserId = userService.getUserWithAuthorities().get().getId();
-        System.out.println("=================== Current User ID ==================");
-        System.out.println("=================== ID : " + currentUserId);
-        User currentUser = userRepository.findById(currentUserId).get();
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println("=================== Current User ==================");
-        System.out.println(currentUser);
+        User currentUser = userService.getUserWithAuthorities().get();
         return ResponseEntity.ok().body(courseRepository.findCourseByUser(currentUser));
+    }
+
+    @GetMapping("/courses/pointer")
+    public ResponseEntity<List<Course>> getUserCoursePointer() {
+        User currentUser = userService.getUserWithAuthorities().get();
+        return ResponseEntity.ok().body(courseRepository.findCourseByUserAndPointerIsTrue(currentUser));
+    }
+
+    @GetMapping("/courses/notpointer")
+    public ResponseEntity<List<Course>> getUserCourseUnPointer() {
+        User currentUser = userService.getUserWithAuthorities().get();
+        return ResponseEntity.ok().body(courseRepository.findCourseByUserAndPointerIsFalse(currentUser));
     }
 }

@@ -23,7 +23,6 @@ export class ModuleUpdateComponent implements OnInit {
     id: [],
     moduleName: [],
     desccription: [],
-    hourNumber: [],
     user: [],
   });
 
@@ -84,7 +83,6 @@ export class ModuleUpdateComponent implements OnInit {
       id: module.id,
       moduleName: module.moduleName,
       desccription: module.desccription,
-      hourNumber: module.hourNumber,
       user: module.user,
     });
 
@@ -105,7 +103,6 @@ export class ModuleUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       moduleName: this.editForm.get(['moduleName'])!.value,
       desccription: this.editForm.get(['desccription'])!.value,
-      hourNumber: this.editForm.get(['hourNumber'])!.value,
       user: this.editForm.get(['user'])!.value,
     };
   }

@@ -34,11 +34,15 @@
         <tr>
           <th scope="col"><span>ID</span></th>
           <th scope="col"><span>Course Name</span></th>
-          <th scope="col"><span>Total Hour</span></th>
-          <th scope="col"><span>Begin Hourse</span></th>
-          <th scope="col"><span>End Hour</span></th>
+          <th scope="col"><span>Pointer</span></th>
+          <th scope="col"><span>Jour</span></th>
+          <th scope="col"><span>Volume Horaire</span></th>
+          <th scope="col"><span>Salle</span></th>
+          <th scope="col"><span>Heure De Debut</span></th>
+          <th scope="col"><span>Heure De Fin</span></th>
           <th scope="col"><span>Module</span></th>
           <th scope="col"><span>User</span></th>
+          <th scope="col"><span>Classe</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -48,9 +52,12 @@
             <a [routerLink]="['/course', course.id, 'view']">{{ course.id }}</a>
           </td>
           <td>{{ course.courseName }}</td>
-          <td>{{ course.totalHour | formatMediumDate }}</td>
-          <td>{{ course.beginHourse | formatMediumDate }}</td>
-          <td>{{ course.endHour | formatMediumDate }}</td>
+          <td>{{ course.pointer }}</td>
+          <td>{{ course.jour | formatMediumDate }}</td>
+          <td>{{ course.volumeHoraire }}</td>
+          <td>{{ course.salle }}</td>
+          <td>{{ course.heureDeDebut }}</td>
+          <td>{{ course.heureDeFin }}</td>
           <td>
             <div *ngIf="course.module">
               <a [routerLink]="['/module', course.module?.id, 'view']">{{ course.module?.moduleName }}</a>
@@ -58,6 +65,11 @@
           </td>
           <td>
             {{ course.user?.login }}
+          </td>
+          <td>
+            <div *ngIf="course.classe">
+              <a [routerLink]="['/class-room', course.classe?.id, 'view']">{{ course.classe?.classroomName }}</a>
+            </div>
           </td>
           <td class="text-right">
             <div class="btn-group">

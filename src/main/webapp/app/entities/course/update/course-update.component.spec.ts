@@ -13,6 +13,8 @@ import { ModuleService } from 'app/entities/module/service/module.service';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { IClassRoom } from 'app/entities/class-room/class-room.model';
+import { ClassRoomService } from 'app/entities/class-room/service/class-room.service';
 
 import { CourseUpdateComponent } from './course-update.component';
 
@@ -23,6 +25,7 @@ describe('Course Management Update Component', () => {
   let courseService: CourseService;
   let moduleService: ModuleService;
   let userService: UserService;
+  let classRoomService: ClassRoomService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,6 +49,7 @@ describe('Course Management Update Component', () => {
     courseService = TestBed.inject(CourseService);
     moduleService = TestBed.inject(ModuleService);
     userService = TestBed.inject(UserService);
+    classRoomService = TestBed.inject(ClassRoomService);
 
     comp = fixture.componentInstance;
   });
@@ -89,12 +93,33 @@ describe('Course Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call ClassRoom query and add missing value', () => {
+      const course: ICourse = { id: 456 };
+      const classe: IClassRoom = { id: 92675 };
+      course.classe = classe;
+
+      const classRoomCollection: IClassRoom[] = [{ id: 74356 }];
+      jest.spyOn(classRoomService, 'query').mockReturnValue(of(new HttpResponse({ body: classRoomCollection })));
+      const additionalClassRooms = [classe];
+      const expectedCollection: IClassRoom[] = [...additionalClassRooms, ...classRoomCollection];
+      jest.spyOn(classRoomService, 'addClassRoomToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ course });
+      comp.ngOnInit();
+
+      expect(classRoomService.query).toHaveBeenCalled();
+      expect(classRoomService.addClassRoomToCollectionIfMissing).toHaveBeenCalledWith(classRoomCollection, ...additionalClassRooms);
+      expect(comp.classRoomsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const course: ICourse = { id: 456 };
       const module: IModule = { id: 6134 };
       course.module = module;
       const user: IUser = { id: 3609 };
       course.user = user;
+      const classe: IClassRoom = { id: 47600 };
+      course.classe = classe;
 
       activatedRoute.data = of({ course });
       comp.ngOnInit();
@@ -102,6 +127,7 @@ describe('Course Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(course));
       expect(comp.modulesSharedCollection).toContain(module);
       expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.classRoomsSharedCollection).toContain(classe);
     });
   });
 
@@ -182,6 +208,14 @@ describe('Course Management Update Component', () => {
       it('Should return tracked User primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackUserById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackClassRoomById', () => {
+      it('Should return tracked ClassRoom primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackClassRoomById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

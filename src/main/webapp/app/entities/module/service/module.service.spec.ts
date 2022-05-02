@@ -23,7 +23,6 @@ describe('Module Service', () => {
       id: 0,
       moduleName: 'AAAAAAA',
       desccription: 'AAAAAAA',
-      hourNumber: 0,
     };
   });
 
@@ -61,7 +60,6 @@ describe('Module Service', () => {
           id: 1,
           moduleName: 'BBBBBB',
           desccription: 'BBBBBB',
-          hourNumber: 1,
         },
         elemDefault
       );
@@ -80,7 +78,6 @@ describe('Module Service', () => {
         {
           moduleName: 'BBBBBB',
           desccription: 'BBBBBB',
-          hourNumber: 1,
         },
         new Module()
       );
@@ -102,7 +99,6 @@ describe('Module Service', () => {
           id: 1,
           moduleName: 'BBBBBB',
           desccription: 'BBBBBB',
-          hourNumber: 1,
         },
         elemDefault
       );
@@ -154,7 +150,7 @@ describe('Module Service', () => {
       });
 
       it('should add only unique Module to an array', () => {
-        const moduleArray: IModule[] = [{ id: 123 }, { id: 456 }, { id: 44882 }];
+        const moduleArray: IModule[] = [{ id: 123 }, { id: 456 }, { id: 57641 }];
         const moduleCollection: IModule[] = [{ id: 123 }];
         expectedResult = service.addModuleToCollectionIfMissing(moduleCollection, ...moduleArray);
         expect(expectedResult).toHaveLength(3);

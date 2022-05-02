@@ -35,9 +35,6 @@ class ModuleResourceIT {
     private static final String DEFAULT_DESCCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCCRIPTION = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_HOUR_NUMBER = 1;
-    private static final Integer UPDATED_HOUR_NUMBER = 2;
-
     private static final String ENTITY_API_URL = "/api/modules";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -62,7 +59,7 @@ class ModuleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Module createEntity(EntityManager em) {
-        Module module = new Module().moduleName(DEFAULT_MODULE_NAME).desccription(DEFAULT_DESCCRIPTION).hourNumber(DEFAULT_HOUR_NUMBER);
+        Module module = new Module().moduleName(DEFAULT_MODULE_NAME).desccription(DEFAULT_DESCCRIPTION);
         return module;
     }
 
@@ -73,7 +70,7 @@ class ModuleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Module createUpdatedEntity(EntityManager em) {
-        Module module = new Module().moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION).hourNumber(UPDATED_HOUR_NUMBER);
+        Module module = new Module().moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION);
         return module;
     }
 
@@ -97,7 +94,6 @@ class ModuleResourceIT {
         Module testModule = moduleList.get(moduleList.size() - 1);
         assertThat(testModule.getModuleName()).isEqualTo(DEFAULT_MODULE_NAME);
         assertThat(testModule.getDesccription()).isEqualTo(DEFAULT_DESCCRIPTION);
-        assertThat(testModule.getHourNumber()).isEqualTo(DEFAULT_HOUR_NUMBER);
     }
 
     @Test
@@ -131,8 +127,7 @@ class ModuleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(module.getId().intValue())))
             .andExpect(jsonPath("$.[*].moduleName").value(hasItem(DEFAULT_MODULE_NAME)))
-            .andExpect(jsonPath("$.[*].desccription").value(hasItem(DEFAULT_DESCCRIPTION)))
-            .andExpect(jsonPath("$.[*].hourNumber").value(hasItem(DEFAULT_HOUR_NUMBER)));
+            .andExpect(jsonPath("$.[*].desccription").value(hasItem(DEFAULT_DESCCRIPTION)));
     }
 
     @Test
@@ -148,8 +143,7 @@ class ModuleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(module.getId().intValue()))
             .andExpect(jsonPath("$.moduleName").value(DEFAULT_MODULE_NAME))
-            .andExpect(jsonPath("$.desccription").value(DEFAULT_DESCCRIPTION))
-            .andExpect(jsonPath("$.hourNumber").value(DEFAULT_HOUR_NUMBER));
+            .andExpect(jsonPath("$.desccription").value(DEFAULT_DESCCRIPTION));
     }
 
     @Test
@@ -171,7 +165,7 @@ class ModuleResourceIT {
         Module updatedModule = moduleRepository.findById(module.getId()).get();
         // Disconnect from session so that the updates on updatedModule are not directly saved in db
         em.detach(updatedModule);
-        updatedModule.moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION).hourNumber(UPDATED_HOUR_NUMBER);
+        updatedModule.moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION);
 
         restModuleMockMvc
             .perform(
@@ -187,7 +181,6 @@ class ModuleResourceIT {
         Module testModule = moduleList.get(moduleList.size() - 1);
         assertThat(testModule.getModuleName()).isEqualTo(UPDATED_MODULE_NAME);
         assertThat(testModule.getDesccription()).isEqualTo(UPDATED_DESCCRIPTION);
-        assertThat(testModule.getHourNumber()).isEqualTo(UPDATED_HOUR_NUMBER);
     }
 
     @Test
@@ -274,7 +267,6 @@ class ModuleResourceIT {
         Module testModule = moduleList.get(moduleList.size() - 1);
         assertThat(testModule.getModuleName()).isEqualTo(UPDATED_MODULE_NAME);
         assertThat(testModule.getDesccription()).isEqualTo(UPDATED_DESCCRIPTION);
-        assertThat(testModule.getHourNumber()).isEqualTo(DEFAULT_HOUR_NUMBER);
     }
 
     @Test
@@ -289,7 +281,7 @@ class ModuleResourceIT {
         Module partialUpdatedModule = new Module();
         partialUpdatedModule.setId(module.getId());
 
-        partialUpdatedModule.moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION).hourNumber(UPDATED_HOUR_NUMBER);
+        partialUpdatedModule.moduleName(UPDATED_MODULE_NAME).desccription(UPDATED_DESCCRIPTION);
 
         restModuleMockMvc
             .perform(
@@ -305,7 +297,6 @@ class ModuleResourceIT {
         Module testModule = moduleList.get(moduleList.size() - 1);
         assertThat(testModule.getModuleName()).isEqualTo(UPDATED_MODULE_NAME);
         assertThat(testModule.getDesccription()).isEqualTo(UPDATED_DESCCRIPTION);
-        assertThat(testModule.getHourNumber()).isEqualTo(UPDATED_HOUR_NUMBER);
     }
 
     @Test

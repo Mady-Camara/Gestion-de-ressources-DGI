@@ -20,9 +20,6 @@
             <column name="desccription" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="hour_number" type="integer">
-                <constraints nullable="true" />
-            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -49,7 +46,6 @@
             <column name="id" type="numeric"/>
             <column name="module_name" type="string"/>
             <column name="desccription" type="string"/>
-            <column name="hour_number" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
