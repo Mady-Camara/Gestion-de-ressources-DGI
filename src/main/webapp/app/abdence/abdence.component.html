@@ -1,0 +1,59 @@
+<div>
+  <h2 id="page-heading" data-cy="EtudiantHeading">
+    <span>Liste etudiants</span>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="etudiants?.length === 0">
+    <span>No etudiants found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="etudiants && etudiants.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Numero Etudiant</span></th>
+          <th scope="col"><span>Prenom</span></th>
+          <th scope="col"><span>Nom</span></th>
+          <th scope="col"><span>Email</span></th>
+          <th scope="col"><span>Telephone</span></th>
+          <th scope="col"><span>User</span></th>
+          <th scope="col"><span>Class Room</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let etudiant of etudiants">
+          <td>
+            <a [routerLink]="['/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
+          </td>
+          <td>{{ etudiant.numeroEtudiant }}</td>
+          <td>{{ etudiant.prenom }}</td>
+          <td>{{ etudiant.nom }}</td>
+          <td>{{ etudiant.email }}</td>
+          <td>{{ etudiant.telephone }}</td>
+          <td>
+            {{ etudiant.user?.login }}
+          </td>
+          <td>
+            <div *ngIf="etudiant.classRoom">
+              <a [routerLink]="['/class-room', etudiant.classRoom?.id, 'view']">{{ etudiant.classRoom?.classroomName }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Absent</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

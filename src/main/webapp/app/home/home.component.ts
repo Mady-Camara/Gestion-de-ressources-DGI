@@ -65,8 +65,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  absence(cours: ICourse): void {
+    if (cours.classe?.id) {
+      sessionStorage.setItem('classe', cours.classe.id.toString());
+      localStorage.setItem('classe', cours.classe.id.toString());
+      this.router.navigate(['/abscence']);
+    }
+    //this.courseService.update(cours).subscribe();
+
+    //}
+    //
+  }
+
   pointer(cours: ICourse): void {
-    console.log(cours);
     cours.pointer = true;
     this.courseService.update(cours).subscribe();
     window.location.reload();
