@@ -55,7 +55,7 @@
             </a>
           </li>
           <li *ngSwitchCase="true">
-            <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+            <a class="dropdown-item" routerLink="abdence" id="adbence" data-cy="logout">
               <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
               <span>Absences</span>
             </a>
@@ -130,6 +130,18 @@
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span>Module</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="etudiant"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Etudiant</span>
             </a>
           </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

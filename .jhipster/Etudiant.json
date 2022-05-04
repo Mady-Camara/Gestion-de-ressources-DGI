@@ -1,0 +1,48 @@
+{
+  "changelogDate": "20220504092826",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "numeroEtudiant",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Etudiant",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "id": false,
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "etudiant",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "classroomName",
+      "otherEntityName": "classRoom",
+      "relationshipName": "classRoom",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

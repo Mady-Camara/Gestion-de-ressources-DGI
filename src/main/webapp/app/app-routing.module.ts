@@ -9,6 +9,7 @@ import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { TeacherDashbordComponent } from './home/teacher-dashbord/teacher-dashbord.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { AbdenceComponent } from './abdence/abdence.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,10 @@ import { ScheduleComponent } from './schedule/schedule.component';
         {
           path: 'schedule',
           component: ScheduleComponent,
+        },
+        {
+          path: 'abscence',
+          component: AbdenceComponent,
         },
         {
           path: '',

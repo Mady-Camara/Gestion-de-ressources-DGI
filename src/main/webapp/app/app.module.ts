@@ -24,6 +24,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { AbdenceComponent } from './abdence/abdence.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, ScheduleComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, ScheduleComponent, AbdenceComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {
