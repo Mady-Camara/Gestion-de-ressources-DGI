@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>Emploi de temps</h2>
+  <div class="timetable-img text-center">
+    <img src="img/content/timetable.png" alt="" />
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr class="bg-light-gray">
+          <th class="text-uppercase">Lundi</th>
+          <th class="text-uppercase">Mardi</th>
+          <th class="text-uppercase">Mercredi</th>
+          <th class="text-uppercase">Jeudi</th>
+          <th class="text-uppercase">Vendredi</th>
+          <th class="text-uppercase">Samedi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>
+          <tr *ngFor="let cours of lundi">
+            <span class="bg-yellow border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size10">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+
+        <td>
+          <tr *ngFor="let cours of mardi">
+            <span class="bg-yellow border-radius-5 margin-10px-bottom text-white font-size18">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+
+        <td style="text-align: center; align-items: center; margin: 0; padding: 0">
+          <tr *ngFor="let cours of mercredi" style="text-align: center; align-items: center; margin: 0">
+            <span class="bg-yellow border-radius-5 margin-10px-bottom text-white">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+
+        <td>
+          <tr *ngFor="let cours of jeudi">
+            <span class="bg-green border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size10">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+
+        <td>
+          <tr *ngFor="let cours of vendredi">
+            <span class="bg-orange border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size10">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+
+        <td>
+          <tr *ngFor="let cours of samedi">
+            <span class="bg-yellow border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size10">{{ cours.courseName }}</span>
+            <div class="margin-10px-top font-size14">{{ cours.heureDeDebut }}-{{ cours.heureDeFin }}</div>
+            <div class="font-size13 text-light-gray">{{ cours.libelleJour }}</div>
+          </tr>
+        </td>
+      </tbody>
+    </table>
+  </div>
+</div>

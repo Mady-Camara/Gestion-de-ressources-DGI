@@ -27,7 +27,7 @@ export class CourseService {
   }
 
   update(course: ICourse): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(course);
+    const copy = course;
     return this.http
       .put<ICourse>(`${this.resourceUrl}/${getCourseIdentifier(course) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -86,9 +86,13 @@ export class CourseService {
     return this.http.get<ICourse[]>(`${this.resourceUrl}/notpointer`, { observe: 'response' });
   }
 
+  findCoursOfWeek(): Observable<HttpResponse<ICourse[]>> {
+    return this.http.get<ICourse[]>(`${this.resourceUrl}/week`, { observe: 'response' });
+  }
+
   protected convertDateFromClient(course: ICourse): ICourse {
     return Object.assign({}, course, {
-      jour: course.jour?.isValid() ? course.jour.format(DATE_FORMAT) : undefined,
+      jour: course.jour?.isValid() ? course.jour.format(DATE_FORMAT) : course.jour,
     });
   }
 

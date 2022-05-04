@@ -47,7 +47,9 @@ public class Course implements Serializable {
     @Column(name = "heure_de_fin", nullable = false)
     private String heureDeFin;
 
-    @NotNull
+    @Column(name = "libelle_jour")
+    private String libelleJour;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private Module module;
@@ -166,6 +168,19 @@ public class Course implements Serializable {
         this.heureDeFin = heureDeFin;
     }
 
+    public String getLibelleJour() {
+        return this.libelleJour;
+    }
+
+    public Course libelleJour(String libelleJour) {
+        this.setLibelleJour(libelleJour);
+        return this;
+    }
+
+    public void setLibelleJour(String libelleJour) {
+        this.libelleJour = libelleJour;
+    }
+
     public Module getModule() {
         return this.module;
     }
@@ -236,6 +251,7 @@ public class Course implements Serializable {
             ", salle='" + getSalle() + "'" +
             ", heureDeDebut='" + getHeureDeDebut() + "'" +
             ", heureDeFin='" + getHeureDeFin() + "'" +
+            ", libelleJour='" + getLibelleJour() + "'" +
             "}";
     }
 }

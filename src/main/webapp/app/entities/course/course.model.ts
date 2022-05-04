@@ -12,6 +12,7 @@ export interface ICourse {
   salle?: string | null;
   heureDeDebut?: string;
   heureDeFin?: string;
+  libelleJour?: string | null;
   module?: IModule | null;
   user?: IUser | null;
   classe?: IClassRoom | null;
@@ -27,6 +28,7 @@ export class Course implements ICourse {
     public salle?: string | null,
     public heureDeDebut?: string,
     public heureDeFin?: string,
+    public libelleJour?: string | null,
     public module?: IModule | null,
     public user?: IUser | null,
     public classe?: IClassRoom | null

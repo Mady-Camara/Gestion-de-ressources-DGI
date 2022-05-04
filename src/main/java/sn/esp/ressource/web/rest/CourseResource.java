@@ -2,6 +2,7 @@ package sn.esp.ressource.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import sn.esp.ressource.domain.Course;
 import sn.esp.ressource.domain.User;
 import sn.esp.ressource.repository.CourseRepository;
+import sn.esp.ressource.service.CourseService;
 import sn.esp.ressource.service.UserService;
 import sn.esp.ressource.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -40,9 +42,12 @@ public class CourseResource {
 
     private final UserService userService;
 
-    public CourseResource(CourseRepository courseRepository, UserService userService) {
+    private final CourseService courseService;
+
+    public CourseResource(CourseRepository courseRepository, UserService userService, CourseService courseService) {
         this.courseRepository = courseRepository;
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     /**
@@ -70,6 +75,7 @@ public class CourseResource {
         if (course.getVolumeHoraire() == null) {
             course.setVolumeHoraire(0);
         }
+        courseService.courseDay(course);
         Course result = courseRepository.save(course);
         return ResponseEntity
             .created(new URI("/api/courses/" + result.getId()))
@@ -115,7 +121,7 @@ public class CourseResource {
         if (course.getVolumeHoraire() == null) {
             course.setVolumeHoraire(0);
         }
-
+        courseService.courseDay(course);
         Course result = courseRepository.save(course);
         return ResponseEntity
             .ok()
@@ -178,7 +184,7 @@ public class CourseResource {
                 if (course.getHeureDeFin() != null) {
                     existingCourse.setHeureDeFin(course.getHeureDeFin());
                 }
-
+                courseService.courseDay(course);
                 return existingCourse;
             })
             .map(courseRepository::save);
@@ -245,5 +251,25 @@ public class CourseResource {
     public ResponseEntity<List<Course>> getUserCourseUnPointer() {
         User currentUser = userService.getUserWithAuthorities().get();
         return ResponseEntity.ok().body(courseRepository.findCourseByUserAndPointerIsFalse(currentUser));
+    }
+
+    //The user cours of the week
+    @GetMapping("/courses/week")
+    public ResponseEntity<List<Course>> getCourseOfWeek() {
+        User currentUser = userService.getUserWithAuthorities().get();
+        List<Course> courses = courseRepository.findCourseByUserAndPointerIsFalse(currentUser);
+        courses = courseService.coursesOfWeek(courses);
+        System.out.println("Cours de la semaine");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        for (Course course : courses) System.out.println(course);
+        return ResponseEntity.ok().body(courses);
     }
 }

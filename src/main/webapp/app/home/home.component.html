@@ -500,7 +500,7 @@
             Nombre total d'heure : <span>{{ cours.volumeHoraire }}</span>
           </div>
           <div>
-            Jour : <span>{{ cours.jour }}</span>
+            Jour : <span>{{ cours.libelleJour }} / {{ cours.jour }}</span>
           </div>
           <div class="item__price">{{ cours?.heureDeDebut?.toString() }} à {{ cours.heureDeFin?.toString() }}</div>
         </div>
@@ -512,6 +512,6 @@
         </span>-->
       </span>
     </div>
-    <button class="btn btn-primary">Pointer</button>
+    <button class="btn btn-primary" type="button" (click)="pointer(cours)">Pointer</button>
   </div>
 </div>

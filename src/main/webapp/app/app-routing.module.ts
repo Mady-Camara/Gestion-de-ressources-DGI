@@ -8,6 +8,7 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { TeacherDashbordComponent } from './home/teacher-dashbord/teacher-dashbord.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,14 @@ import { TeacherDashbordComponent } from './home/teacher-dashbord/teacher-dashbo
           path: 'home',
           loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
         },
-        { path: 'dashboard', component: TeacherDashbordComponent },
+        {
+          path: 'dashboard',
+          component: TeacherDashbordComponent,
+        },
+        {
+          path: 'schedule',
+          component: ScheduleComponent,
+        },
         {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
