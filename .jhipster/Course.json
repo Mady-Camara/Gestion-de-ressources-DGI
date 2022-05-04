@@ -30,6 +30,10 @@
       "fieldName": "heureDeFin",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "libelleJour",
+      "fieldType": "String"
     }
   ],
   "name": "Course",

@@ -78,6 +78,7 @@ class CourseGatlingTest extends Simulation {
                 , "salle":"SAMPLE_TEXT"
                 , "heureDeDebut":"SAMPLE_TEXT"
                 , "heureDeFin":"SAMPLE_TEXT"
+                , "libelleJour":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_course_url"))).exitHereIfFailed

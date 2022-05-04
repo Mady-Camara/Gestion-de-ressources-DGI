@@ -43,6 +43,12 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dashboard">
           <li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="schedule" routerLinkActive="active" (click)="collapseNavbar()" data-cy="passwordItem">
+              <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+              <span>Emploi de temps</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
             <a class="dropdown-item" routerLink="dashboard" routerLinkActive="active" (click)="collapseNavbar()" data-cy="passwordItem">
               <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
               <span>Etudiant</span>
@@ -51,7 +57,7 @@
           <li *ngSwitchCase="true">
             <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
               <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-              <span>Absence</span>
+              <span>Absences</span>
             </a>
           </li>
           <li *ngSwitchCase="false">

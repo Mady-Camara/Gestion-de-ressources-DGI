@@ -35,6 +35,9 @@
             <column name="heure_de_fin" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="libelle_jour" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="module_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -72,6 +75,7 @@
             <column name="salle" type="string"/>
             <column name="heure_de_debut" type="string"/>
             <column name="heure_de_fin" type="string"/>
+            <column name="libelle_jour" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

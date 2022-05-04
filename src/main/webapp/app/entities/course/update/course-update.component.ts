@@ -34,6 +34,7 @@ export class CourseUpdateComponent implements OnInit {
     salle: [],
     heureDeDebut: [null, [Validators.required]],
     heureDeFin: [null, [Validators.required]],
+    libelleJour: [],
     module: [],
     user: [],
     classe: [],
@@ -62,8 +63,6 @@ export class CourseUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    this.createFromForm().heureDeDebut = this.createFromForm().heureDeDebut?.toString();
-    this.createFromForm().heureDeFin = this.createFromForm().heureDeFin?.toString();
     const course = this.createFromForm();
     if (course.id !== undefined) {
       this.subscribeToSaveResponse(this.courseService.update(course));
@@ -113,6 +112,7 @@ export class CourseUpdateComponent implements OnInit {
       salle: course.salle,
       heureDeDebut: course.heureDeDebut,
       heureDeFin: course.heureDeFin,
+      libelleJour: course.libelleJour,
       module: course.module,
       user: course.user,
       classe: course.classe,
@@ -161,6 +161,7 @@ export class CourseUpdateComponent implements OnInit {
       salle: this.editForm.get(['salle'])!.value,
       heureDeDebut: this.editForm.get(['heureDeDebut'])!.value,
       heureDeFin: this.editForm.get(['heureDeFin'])!.value,
+      libelleJour: this.editForm.get(['libelleJour'])!.value,
       module: this.editForm.get(['module'])!.value,
       user: this.editForm.get(['user'])!.value,
       classe: this.editForm.get(['classe'])!.value,
